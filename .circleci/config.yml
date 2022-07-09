@@ -9,7 +9,11 @@ jobs:
       - run: chmod 777 infrastructure.sh
       - run:
           name: Create Cloudformation Stack
-          command: ./infrastructure.sh
+          command: |
+            aws cloudformation deploy \
+              --template-file template.yml \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --region us-east-1
 
 workflows:
   myWorkflow:
