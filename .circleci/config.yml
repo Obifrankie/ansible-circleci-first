@@ -1,16 +1,6 @@
 version: 2.1
 
 jobs:
-  create_infrastructure:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run: chmod 777 infrastructure.sh
-      - run:
-          name: Create Cloudformation Stack
-          command: ./infrastructure.sh
-
   configure_infrastructure:
     docker:
       - image: python:3.7-alpine3.11
