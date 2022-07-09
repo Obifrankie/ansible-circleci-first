@@ -11,7 +11,24 @@ jobs:
           name: Create Cloudformation Stack
           command: ./infrastructure.sh
 
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["a8:d7:4b:60:a8:1b:b8:e5:e9:f2:5d:e3:85:b3:82:d7"]
+      - run:
+          name: Install Ansible
+          command: |
+            apk add --update ansible
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            ansible-playbook -i inventory main.yml
+
 workflows:
   myWorkflow:
     jobs:
-      - create_infrastructure
+      # - create_infrastructure
+      - configure_infrastructure:
